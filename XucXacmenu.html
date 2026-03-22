@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Menu — Xúc Xắc</title>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;600;700;900&display=swap" rel="stylesheet">
+<style>
+  :root { --red: #C43830; --dark: #160D08; --darker: #0a0604; }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { background: var(--darker); font-family: 'Archivo', sans-serif; color: #fff; min-height: 100vh; }
+  .header { text-align: center; padding: 48px 24px 24px; position: relative; overflow: hidden; }
+  .header::before { content: ''; position: absolute; top: 0; left: 0; right: 0; bottom: 0; background: radial-gradient(ellipse at center top, rgba(196,56,48,0.15) 0%, transparent 70%); pointer-events: none; }
+  .header-logo { font-size: 52px; font-weight: 900; letter-spacing: -2px; line-height: 0.9; color: var(--red); text-transform: uppercase; margin-bottom: 12px; }
+  .header-sub { font-size: 13px; letter-spacing: 4px; text-transform: uppercase; color: rgba(255,255,255,0.4); margin-bottom: 8px; }
+  .header-tagline { display: inline-block; background: var(--red); color: #fff; font-size: 11px; font-weight: 700; letter-spacing: 3px; text-transform: uppercase; padding: 6px 16px; border-radius: 2px; margin-top: 8px; }
+  .dice-row { display: flex; justify-content: center; gap: 8px; margin: 20px 0 8px; opacity: 0.3; }
+  .dice { width: 10px; height: 10px; background: var(--red); border-radius: 2px; }
+  .section-label { text-align: center; padding: 8px 24px; font-size: 10px; letter-spacing: 3px; text-transform: uppercase; color: rgba(255,255,255,0.25); margin-bottom: 16px; }
+  .menu-container { padding: 0 16px 16px; display: flex; flex-direction: column; gap: 12px; max-width: 600px; margin: 0 auto; }
+  .menu-page { width: 100%; border-radius: 8px; overflow: hidden; cursor: pointer; transition: transform 0.2s ease; box-shadow: 0 4px 20px rgba(0,0,0,0.5); }
+  .menu-page:active { transform: scale(0.98); }
+  .menu-page img { width: 100%; height: auto; display: block; }
+  .lightbox { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.95); z-index: 1000; justify-content: center; align-items: center; padding: 16px; }
+  .lightbox.active { display: flex; }
+  .lightbox img { max-width: 100%; max-height: 90vh; object-fit: contain; border-radius: 4px; }
+  .lightbox-close { position: fixed; top: 16px; right: 16px; width: 40px; height: 40px; background: var(--red); border-radius: 50%; display: flex; align-items: center; justify-content: center; cursor: pointer; font-size: 20px; color: #fff; border: none; z-index: 1001; }
+  .lightbox-nav { position: fixed; top: 50%; transform: translateY(-50%); width: 44px; height: 44px; background: rgba(196,56,48,0.8); border-radius: 50%; display: flex; align-items: center; justify-content: center; cursor: pointer; font-size: 24px; color: #fff; border: none; z-index: 1001; }
+  .lightbox-prev { left: 8px; }
+  .lightbox-next { right: 8px; }
+  .footer { text-align: center; padding: 32px 24px 48px; border-top: 1px solid rgba(255,255,255,0.06); margin-top: 24px; }
+  .footer-name { font-size: 18px; font-weight: 700; color: var(--red); margin-bottom: 8px; }
+  .footer-info { font-size: 13px; color: rgba(255,255,255,0.4); line-height: 1.8; }
+  .footer-phone { display: inline-block; margin-top: 16px; background: var(--red); color: #fff; font-size: 14px; font-weight: 700; padding: 12px 28px; border-radius: 4px; text-decoration: none; letter-spacing: 1px; }
+  .scroll-hint { text-align: center; font-size: 11px; color: rgba(255,255,255,0.2); letter-spacing: 2px; padding: 12px 0 0; text-transform: uppercase; }
+</style>
+</head>
+<body>
+
+<div class="header">
+  <div class="header-logo">XÚC<br>XẮC</div>
+  <div class="header-sub">Giải trí Lắc Xí Ngầu</div>
+  <div class="header-tagline">Nâng tầm cuộc vui</div>
+</div>
+
+<div class="dice-row">
+  <div class="dice"></div><div class="dice"></div><div class="dice"></div>
+  <div class="dice"></div><div class="dice"></div><div class="dice"></div>
+</div>
+
+<div class="section-label">Thực đơn · Menu · 메뉴 · 菜单</div>
+
+<div class="menu-container">
+  <div class="menu-page" onclick="openLightbox(0)"><img src="https://res.cloudinary.com/djlf9d1ij/image/upload/v1774201485/IMG_4724_hqctbr.jpg" alt="Menu Xúc Xắc" loading="lazy"></div>
+  <div class="menu-page" onclick="openLightbox(1)"><img src="https://res.cloudinary.com/djlf9d1ij/image/upload/v1774201486/IMG_4725_p4oeka.jpg" alt="Khai vị / Gỏi" loading="lazy"></div>
+  <div class="menu-page" onclick="openLightbox(2)"><img src="https://res.cloudinary.com/djlf9d1ij/image/upload/v1774201486/IMG_4726_wde48z.jpg" alt="Gỏi - Cá hồi xốt Thái" loading="lazy"></div>
+  <div class="menu-page" onclick="openLightbox(3)"><img src="https://res.cloudinary.com/djlf9d1ij/image/upload/v1774201486/IMG_4727_pmyk7o.jpg" alt="Nhâm nhi" loading="lazy"></div>
+  <div class="menu-page" onclick="openLightbox(4)"><img src="https://res.cloudinary.com/djlf9d1ij/image/upload/v1774201487/IMG_4728_pfp5pv.jpg" alt="Món chính - Tôm sú xốt Singapore" loading="lazy"></div>
+  <div class="menu-page" onclick="openLightbox(5)"><img src="https://res.cloudinary.com/djlf9d1ij/image/upload/v1774201487/IMG_4729_xg31gt.jpg" alt="Món chính" loading="lazy"></div>
+  <div class="menu-page" onclick="openLightbox(6)"><img src="https://res.cloudinary.com/djlf9d1ij/image/upload/v1774201487/IMG_4730_ibhdnh.jpg" alt="Món nướng" loading="lazy"></div>
+  <div class="menu-page" onclick="openLightbox(7)"><img src="https://res.cloudinary.com/djlf9d1ij/image/upload/v1774201487/IMG_4731_qqsmbz.jpg" alt="Món nướng / Món nước" loading="lazy"></div>
+  <div class="menu-page" onclick="openLightbox(8)"><img src="https://res.cloudinary.com/djlf9d1ij/image/upload/v1774201487/IMG_4732_wktmrx.jpg" alt="Cơm / Mỳ / Rau" loading="lazy"></div>
+  <div class="menu-page" onclick="openLightbox(9)"><img src="https://res.cloudinary.com/djlf9d1ij/image/upload/v1774201487/IMG_4733_z9zo5o.jpg" alt="Nước / Drinks" loading="lazy"></div>
+</div>
+
+<div class="scroll-hint">↑ Bấm vào ảnh để phóng to</div>
+
+<div class="footer">
+  <div class="footer-name">Nhà hàng Xúc Xắc</div>
+  <div class="footer-info">246 Trần Hưng Đạo, Phường An Hải, Đà Nẵng<br>Mở cửa: 17:00 – 00:00 hàng ngày</div>
+  <a href="tel:0911684343" class="footer-phone">📞 091 168 4343</a>
+</div>
+
+<div class="lightbox" id="lightbox" onclick="closeLightboxOnBg(event)">
+  <button class="lightbox-close" onclick="closeLightbox()">✕</button>
+  <button class="lightbox-nav lightbox-prev" onclick="navigate(-1)">‹</button>
+  <img id="lightboxImg" src="" alt="">
+  <button class="lightbox-nav lightbox-next" onclick="navigate(1)">›</button>
+</div>
+
+<script>
+const images = [
+  'https://res.cloudinary.com/djlf9d1ij/image/upload/v1774201485/IMG_4724_hqctbr.jpg',
+  'https://res.cloudinary.com/djlf9d1ij/image/upload/v1774201486/IMG_4725_p4oeka.jpg',
+  'https://res.cloudinary.com/djlf9d1ij/image/upload/v1774201486/IMG_4726_wde48z.jpg',
+  'https://res.cloudinary.com/djlf9d1ij/image/upload/v1774201486/IMG_4727_pmyk7o.jpg',
+  'https://res.cloudinary.com/djlf9d1ij/image/upload/v1774201487/IMG_4728_pfp5pv.jpg',
+  'https://res.cloudinary.com/djlf9d1ij/image/upload/v1774201487/IMG_4729_xg31gt.jpg',
+  'https://res.cloudinary.com/djlf9d1ij/image/upload/v1774201487/IMG_4730_ibhdnh.jpg',
+  'https://res.cloudinary.com/djlf9d1ij/image/upload/v1774201487/IMG_4731_qqsmbz.jpg',
+  'https://res.cloudinary.com/djlf9d1ij/image/upload/v1774201487/IMG_4732_wktmrx.jpg',
+  'https://res.cloudinary.com/djlf9d1ij/image/upload/v1774201487/IMG_4733_z9zo5o.jpg'
+];
+let current = 0;
+
+function openLightbox(idx) {
+  current = idx;
+  document.getElementById('lightboxImg').src = images[current];
+  document.getElementById('lightbox').classList.add('active');
+  document.body.style.overflow = 'hidden';
+}
+function closeLightbox() {
+  document.getElementById('lightbox').classList.remove('active');
+  document.body.style.overflow = '';
+}
+function closeLightboxOnBg(e) {
+  if (e.target === document.getElementById('lightbox')) closeLightbox();
+}
+function navigate(dir) {
+  current = (current + dir + images.length) % images.length;
+  document.getElementById('lightboxImg').src = images[current];
+}
+document.addEventListener('keydown', e => {
+  if (e.key === 'Escape') closeLightbox();
+  if (e.key === 'ArrowLeft') navigate(-1);
+  if (e.key === 'ArrowRight') navigate(1);
+});
+let startX = 0;
+document.getElementById('lightbox').addEventListener('touchstart', e => { startX = e.touches[0].clientX; });
+document.getElementById('lightbox').addEventListener('touchend', e => {
+  const diff = startX - e.changedTouches[0].clientX;
+  if (Math.abs(diff) > 50) navigate(diff > 0 ? 1 : -1);
+});
+</script>
+</body>
+</html>
